@@ -1,45 +1,24 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
+const express = require("express");
+const dotenv = require("dotenv");
 dotenv.config();
-const constants = require('./config/constants');
-const connectDB = require('./config/database');
-const responseHelper = require('./helpers/responseHelper');
+const connectDB = require("./database");
+
+const HOST = process.env.HOST;
+const PORT = process.env.PORT;
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
-app.get('/health-check', (req, res) => {
-    return res.status(200).json(
-        responseHelper.success(
-            200,
-            "OK",
-            "The server is UP",
-        )
-    );
+app.get("/health-check", (req, res) => {
+    return res.status(200).json({
+        status: 200,
+        message: "The server is UP",
+    })
 });
 
-app.use((req, res) => {
-    return res.status(404).json(
-        responseHelper.error(
-            404,
-            "Not found",
-            "The route is invalid or not found",
-            constants.ERROR_CODES.NOT_FOUND,
-        )
-    );
-});
+app.use("/api/v1/users", require("./userRouter"));
 
-const server = app.listen(constants.PORT, constants.HOST, async () => {
+app.listen(PORT, HOST, async () => {
     console.clear();
     await connectDB();
-    console.log(`The server started on http://${constants.HOST}:${constants.PORT}`);
-});
-
-process.on('SIGTERM', () => {
-    server.on('close', () => {
-        console.log("The server is DOWN");
-        process.exit(1);
-    });
+    console.log(`The server started on http://${HOST}:${PORT}`);
 });

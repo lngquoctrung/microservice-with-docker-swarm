@@ -1,6 +1,12 @@
 .idea
-backend/auth-service/src/config/private_key.pem
-backend/auth-service/src/config/public_key.pem
+backend/auth-service/.env
+backend/auth-service/node_modules
+
 backend/user-service/.env
-backend/user-service/src/config/public_key.pem
+backend/user-service/node_modules
+
+backend/product-service/.env
+backend/product-service/node_modules
+
 frontend/.env
+frontend/node_modules
