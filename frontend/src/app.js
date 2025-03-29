@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cookieParser = require("cookie-parser");
 require('dotenv').config();
 
 const HOST = process.env.HOST;
@@ -13,19 +14,21 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('home');
 });
 
-const server = app.listen(PORT, HOST, () => {
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+
+app.get("/register", (req, res) => {
+    res.render("register");
+});
+
+app.listen(PORT, HOST, () => {
     console.clear();
     console.log(`The server started on http://${HOST}:${PORT}`);
-});
-
-process.on('SIGTERM', () => {
-    server.close(() => {
-        console.log('The server is DOWN');
-        process.exit(1);
-    });
 });

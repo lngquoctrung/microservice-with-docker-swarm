@@ -14,10 +14,28 @@ Content-Type: application/json
     "password": "Trung123"
 }
 
-### Get user by ID
+### Get a user by ID
 GET {{baseUrl}}/api/v1/users/67a2727da64782dc727de57e
 
-### Get user for authentication
+### Get a non existent user by ID
+GET {{baseUrl}}/api/v1/users/67a2727da64782dc727de57a
+
+### Get a user for authentication
 GET {{baseUrl}}/api/v1/users/auth?email=qctrung@gmail.com
 
+### Get a non existent user for authentication
+GET {{baseUrl}}/api/v1/users/auth?email=abc@example.com
+
 ### ===== AUTHENTICATION SERVICE =====
+#### Check authentication
+GET {{baseUrl}}/api/v1/auth/check-auth
+Cookie: email=qctrung@gmail.com
+
+#### Login
+POST {{baseUrl}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "qctrung@gmail.com",
+    "password": "Trung123"
+}

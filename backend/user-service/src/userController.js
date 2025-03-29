@@ -5,7 +5,7 @@ const createUser = async (req, res) => {
     try {
         const newUser = new userModel(user);
         await newUser.save();
-        return res.status(201).json({
+        return res.json({
             status: 201,
             message: "Create user account successfully",
             data: newUser,
@@ -24,12 +24,12 @@ const getUser = async (req, res) => {
     try {
         const user = await userModel.findById(userId).lean();
         if(!user) {
-            return res.status(404).json({
+            return res.json({
                 status: 404,
                 message: "User not found",
             });
         }
-        return res.status(200).json({
+        return res.json({
             status: 200,
             message: "Retrieve user account successfully",
             data: user
@@ -46,7 +46,7 @@ const getUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
     try {
         const users = await userModel.find().lean();
-        return res.status(200).json({
+        return res.json({
             status: 200,
             message: "Fetch the list of users successfully",
             data: users,
@@ -65,12 +65,12 @@ const authUser = async (req, res) => {
     try {
         const user = await userModel.findOne({ email: email }).lean();
         if(!user) {
-            return res.status(404).json({
+            return res.json({
                 status: 404,
                 message: "User not found",
             });
         }
-        return res.status(200).json({
+        return res.json({
             status: 200,
             message: "Retrieve user account successfully",
             data: user
